@@ -1,10 +1,9 @@
-function doWater (index: number) {
-    rekabit.setServoPosition(ServoChannel.S1, 90)
-    rekabit.disableServo(ServoChannel.S1)
-    rekabit.runMotor(MotorChannel.M1, MotorDirection.Forward, 128)
-    basic.pause(5000)
+function doWater () {
+    rekabit.runMotor(MotorChannel.M1, MotorDirection.Forward, 255)
+    basic.pause(10000)
     rekabit.brakeMotor(MotorChannel.M1)
 }
+let index = 0
 let plants: number[] = []
 OLED12864_I2C.init(61)
 OLED12864_I2C.on()
@@ -45,7 +44,7 @@ loops.everyInterval(3600000, function () {
     plants = [pins.analogReadPin(AnalogPin.P0), pins.analogReadPin(AnalogPin.P1)]
     for (let plant of plants) {
         if (plant > 600) {
-            let index = 0
+            index = plants[plant]
             OLED12864_I2C.clear()
             OLED12864_I2C.showString(
             0,
@@ -89,6 +88,7 @@ loops.everyInterval(3600000, function () {
                 1
                 )
             }
+            doWater()
         }
     }
 })
