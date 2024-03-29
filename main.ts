@@ -32,8 +32,8 @@ if (esp8266.isWifiConnected()) {
 loops.everyInterval(3600000, function () {
     plants = [pins.analogReadPin(AnalogPin.P0), pins.analogReadPin(AnalogPin.P1)]
     for (let plant of plants) {
+        index = plants[plant]
         if (plant > 600) {
-            index = plants[plant]
             doOLED("Plant" + convertToText(index) + ": " + ("" + plant))
             esp8266.sendTelegramMessage("7089211278:AAENJMYzVjA-PtYKRFWfcOeFkI-JYnO2QJM", "-4104962273", "Plant" + convertToText(index) + ": " + ("" + plant))
             if (esp8266.isTelegramMessageSent()) {
